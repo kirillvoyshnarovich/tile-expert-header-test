@@ -28,3 +28,21 @@ Header меняет вид на разрешении экрана **890px** (`ma
 - Анимация раскрытия строки поиска на desktop
 - Взаимодействие компонентов через `SearchUiService`
 - Мобильный оверлей поиска с полями и чекбоксами
+
+## Деплой (EasyPanel)
+
+В проекте есть `Dockerfile` и `nginx.conf` для деплоя как Docker-приложения.
+
+1. Запушьте репозиторий на GitHub.
+2. В EasyPanel создайте App и выберите **Dockerfile**.
+3. Подключите репозиторий и запустите Deploy.
+4. Привяжите домен и включите HTTPS.
+
+Локальная проверка Docker:
+
+```bash
+docker build -t tile-search .
+docker run --rm -p 8080:80 tile-search
+```
+
+Откройте http://localhost:8080
