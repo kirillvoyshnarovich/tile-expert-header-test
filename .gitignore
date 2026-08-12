@@ -1,5 +1,5 @@
 # Compiled output
-/dist
+# /dist — коммитим для деплоя prebuilt в EasyPanel (без ng build на VPS)
 /tmp
 /out-tsc
 

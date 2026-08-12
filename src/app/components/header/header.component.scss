@@ -65,6 +65,12 @@ app-search {
   display: none;
 }
 
+@media (max-width: 1440px) {
+  .header__menu {
+    justify-content: flex-end;
+  }
+}
+
 @media (max-width: 950px) {
   .header__menu {
     justify-content: flex-end;

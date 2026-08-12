@@ -1,5 +1,4 @@
 node_modules
-dist
 .angular
 .git
 .gitignore
@@ -10,3 +9,10 @@ npm-debug.log
 coverage
 tmp
 out-tsc
+src
+public
+angular.json
+package.json
+package-lock.json
+tsconfig.json
+tsconfig.app.json

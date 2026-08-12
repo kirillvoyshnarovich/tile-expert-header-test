@@ -29,31 +29,36 @@ Header меняет вид на разрешении экрана **890px** (`ma
 - Взаимодействие компонентов через `SearchUiService`
 - Мобильный оверлей поиска с полями и чекбоксами
 
-## Деплой (EasyPanel)
+## Деплой (EasyPanel) — уже собранный проект
 
-В проекте есть `Dockerfile` и `nginx.conf` для деплоя как Docker-приложения.
+На VPS `ng build` не запускается: в образ кладётся готовая статика из `dist/`.
 
-1. Запушьте репозиторий на GitHub.
-2. В EasyPanel создайте App и выберите **Dockerfile**.
-3. Source: ветка `master`, Build Path `/`, Port `80`.
-4. Deploy → URL смотрите в Domains (не порт `:3000` панели).
-
-Если сборка зависает на `ng build` / падает с кодом **137** — на VPS мало RAM. На сервере добавьте swap (пример для Ubuntu):
+### Локально
 
 ```bash
-sudo fallocate -l 2G /swapfile
-sudo chmod 600 /swapfile
-sudo mkswap /swapfile
-sudo swapon /swapfile
+npm ci
+npm run build
 ```
 
-После этого снова Deploy в EasyPanel.
+Должна появиться папка `dist/tile-search/browser/`.
 
-Локальная проверка Docker:
+### В Git
 
 ```bash
-docker build -t tile-search .
-docker run --rm -p 8080:80 tile-search
+git add dist Dockerfile nginx.conf .dockerignore .gitignore
+git commit -m "Deploy prebuilt static build"
+git push origin master
 ```
 
-Откройте http://localhost:8080
+### В EasyPanel
+
+1. App → source: GitHub, ветка `master`, Build Path `/`
+2. Builder: **Dockerfile**
+3. Port: **80**
+4. Deploy
+
+Dockerfile только копирует `dist/tile-search/browser` в nginx — сборка на сервере почти мгновенная.
+
+После правок в коде снова: `npm run build` → commit `dist/` → push → Deploy.
+
+URL сайта — в разделе **Domains** (не `:3000` панели).

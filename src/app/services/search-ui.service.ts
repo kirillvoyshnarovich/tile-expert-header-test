@@ -1,4 +1,5 @@
-import { Injectable, HostListener, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { DestroyRef, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 
 export interface SearchFlags {
   participant: boolean;
@@ -9,12 +10,17 @@ export interface SearchFlags {
   contacts: boolean;
 }
 
+const TABLET_QUERY = '(max-width: 890px)';
+
 @Injectable({ providedIn: 'root' })
 export class SearchUiService {
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly destroyRef = inject(DestroyRef);
+
   readonly isOpen = signal(false);
   readonly query = signal('');
   readonly author = signal('');
-  readonly isTablet  = signal(typeof window !== 'undefined' ? window.innerWidth <= 890 : false);
+  readonly isTablet = signal(false);
   readonly flags = signal<SearchFlags>({
     participant: false,
     inTitles: false,
@@ -24,10 +30,20 @@ export class SearchUiService {
     contacts: false,
   });
 
-  @HostListener('window:resize')
-  onResize(): void {
-    const tablet = window.innerWidth <= 890;
-    this.isTablet.set(tablet);
+  constructor() {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia(TABLET_QUERY);
+    this.isTablet.set(mediaQuery.matches);
+
+    const onChange = (event: MediaQueryListEvent): void => {
+      this.isTablet.set(event.matches);
+    };
+
+    mediaQuery.addEventListener('change', onChange);
+    this.destroyRef.onDestroy(() => mediaQuery.removeEventListener('change', onChange));
   }
 
   open(): void {
