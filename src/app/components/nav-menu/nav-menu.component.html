@@ -1,0 +1,14 @@
+<nav
+  class="nav"
+  [class.nav--collapsed]="collapsed()"
+  [class.nav--vertical]="vertical()"
+  [class.nav--hidden]="hidden()"
+  aria-label="Основное меню"
+>
+  @for (item of items; track item.label) {
+    <button class="nav__item" type="button">
+      <img class="nav__icon" [src]="item.icon" [alt]="item.label" />
+      <span>{{ item.label }}</span>
+    </button>
+  }
+</nav>

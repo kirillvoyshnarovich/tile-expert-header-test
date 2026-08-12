@@ -1,0 +1,90 @@
+<div class="search" [class.search--open]="isOpen()">
+  <div class="search__container">
+    <button
+        class="search__icon-btn"
+        type="button"
+        title="Поиск!"
+        aria-label="Открыть поиск"
+        (click)="open()"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle
+            cx="11" cy="11" r="7"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          />
+          <path
+            d="M16.5 16.5L21 21"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+    </button>
+    
+    <form
+      class="search__panel search__panel--desktop"
+      [class.search__panel--open]="isOpen()"
+      (submit)="onSubmit($event)"
+    >
+      <label class="search__field">
+        <input
+          #queryInput
+          class="search__input"
+          type="search"
+          name="query"
+          placeholder=""
+          autocomplete="off"
+          [ngModel]="query()"
+          (ngModelChange)="onQueryChange($event)"
+        />
+      </label>
+
+      <button class="search__submit" type="submit">НАЙТИ</button>
+    </form>
+  </div>
+
+  @if (isOpen()) {
+    <app-search-filters class="search__filters search__filters--desktop" />
+  }
+
+  @if (isOpen()) {
+    <div 
+      class="search__overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Поиск"
+      aria-hidden="true"
+    >
+      <div class="search__overlay-bar">
+        <img src="assets/icons/arrow.svg" alt="Поиск" />
+        <label class="search__overlay-field">
+          <input
+            #mobileQueryInput
+            class="search__overlay-input"
+            type="search"
+            name="mobileQuery"
+            placeholder="Поиск"
+            autocomplete="off"
+            [ngModel]="query()"
+            (ngModelChange)="onQueryChange($event)"
+          />
+        </label>
+
+        <button
+          class="search__overlay-close"
+          type="button"
+          aria-label="Закрыть поиск"
+          (click)="close()"
+          aria-hidden="true"
+        >
+          ✕
+        </button>
+      </div>
+
+      <app-search-filters [mobile]="true" />
+    </div>
+  }
+</div>

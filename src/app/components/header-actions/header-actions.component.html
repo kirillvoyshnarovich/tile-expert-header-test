@@ -1,0 +1,38 @@
+<div class="actions">
+  @if (isTablet()) {
+    <app-add-button />
+    <button
+      class="actions__btn actions__btn--history"
+      type="button"
+      title="История"
+      aria-label="История"
+    >
+      <img src="assets/icons/menu_history.svg" alt="История" />
+    </button>
+    <app-search />
+  }
+
+  <button
+    class="actions__btn actions__btn--badge"
+    type="button"
+    title="Уведомления"
+    aria-label="Уведомления"
+  >
+    <img
+      class="notifications__icon"
+      src="assets/icons/notifications.svg"
+      alt="Уведомления"
+    />
+    <span class="actions__badge">{{ notifications }}</span>
+  </button>
+  
+  @if (!isTablet()) {
+    <button
+      class="actions__avatar"
+      type="button"
+      aria-label="Профиль"
+    >
+      <img src="assets/avatar.png" alt="" width="32" height="32" />
+    </button>
+  }
+</div>

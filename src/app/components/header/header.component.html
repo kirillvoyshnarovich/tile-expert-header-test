@@ -1,0 +1,25 @@
+<header class="header-container">
+  @if (isTablet()) {
+    <app-mobile-header-row />
+  }
+
+  <div class="header" [class.header--search-open]="isSearchOpen()">
+    @if (isTablet()) {
+      <button class="header__burger">
+          <img src="assets/icons/burger.svg" alt="Menu">
+      </button>
+    }
+
+    <app-logo />
+
+    @if (!isTablet()) {
+      <div class="header__menu" [class.header__menu--search-open]="isSearchOpen()">
+          <app-nav-menu [hidden]="isSearchOpen()" />
+          <app-search />
+          <app-add-button class="search__add-button"/>
+      </div>
+    }
+
+    <app-header-actions />
+  </div>
+</header>

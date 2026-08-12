@@ -1,0 +1,34 @@
+.mobile-header-row {
+    height: 44px;
+    display: flex;
+    padding: 0 16px;
+    align-items: center;
+    box-sizing: border-box;
+    background-color: #1074CC;
+    justify-content: space-between;
+}
+
+.time {
+    display: flex;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.time--black {
+    color: #000 !important;
+}
+
+.info {
+    display: flex;
+    gap: 5px;
+}
+
+.mobile-header-row--white {
+    background-color: #fff;
+}
+
+.info__icon--black {
+    fill: #000 !important;
+    stroke: #000 !important;
+}

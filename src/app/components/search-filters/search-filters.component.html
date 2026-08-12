@@ -1,0 +1,75 @@
+@if (mobile()) {
+  <div class="filters filters--mobile" role="region" aria-label="Расширенный поиск">
+    <div class="filters__group">
+      <div class="filters__author">
+        <span class="filters__floating-label">Автор</span>
+        <input
+          class="filters__author-input"
+          type="text"
+          placeholder="Имя или должность"
+          [ngModel]="author()"
+          (ngModelChange)="onAuthorChange($event)"
+        />
+        <button class="filters__me" type="button" title="Я" (click)="setMe()">Я</button>
+      </div>
+    </div>
+
+    <div class="filters__list">
+      @for (option of generalOptions; track option.key) {
+        <label class="filters__check">
+          <input
+            type="checkbox"
+            [ngModel]="flags()[option.key]"
+            (ngModelChange)="onFlagChange(option.key, $event)"
+          />
+          <span class="filters__box" aria-hidden="true"></span>
+          <span>{{ option.label }}</span>
+        </label>
+      }
+    </div>
+
+    <div class="filters__group">
+      <div class="filters__label">Только</div>
+      <div class="filters__list">
+        @for (option of onlyOptions; track option.key) {
+          <label class="filters__check">
+            <input
+              type="checkbox"
+              [ngModel]="flags()[option.key]"
+              (ngModelChange)="onFlagChange(option.key, $event)"
+            />
+            <span class="filters__box" aria-hidden="true"></span>
+            <span>{{ option.label }}</span>
+          </label>
+        }
+      </div>
+    </div>
+  </div>
+} @else {
+  <div class="filters filters--desktop" role="region" aria-label="Расширенный поиск">
+    <div class="filters__row">
+      <span class="filters__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="1.8" />
+          <path
+            d="M5 19c0-3.5 3.1-6 7-6s7 2.5 7 6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          />
+        </svg>
+      </span>
+
+      <input
+        class="filters__input"
+        type="text"
+        placeholder="Автор"
+        [ngModel]="author()"
+        (ngModelChange)="onAuthorChange($event)"
+      />
+
+      <button class="filters__me" type="button" title="Я" (click)="setMe()">Я</button>
+    </div>
+  </div>
+}
