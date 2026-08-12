@@ -1,6 +1,11 @@
 FROM node:22-alpine AS build
 WORKDIR /app
 
+# Low-RAM VPS: limit parallelism so `ng build` doesn't get OOM-killed
+ENV CI=true
+ENV NG_BUILD_MAX_WORKERS=1
+ENV NODE_OPTIONS=--max-old-space-size=1536
+
 COPY package.json package-lock.json ./
 RUN npm ci
 

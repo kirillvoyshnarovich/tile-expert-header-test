@@ -35,8 +35,19 @@ Header меняет вид на разрешении экрана **890px** (`ma
 
 1. Запушьте репозиторий на GitHub.
 2. В EasyPanel создайте App и выберите **Dockerfile**.
-3. Подключите репозиторий и запустите Deploy.
-4. Привяжите домен и включите HTTPS.
+3. Source: ветка `master`, Build Path `/`, Port `80`.
+4. Deploy → URL смотрите в Domains (не порт `:3000` панели).
+
+Если сборка зависает на `ng build` / падает с кодом **137** — на VPS мало RAM. На сервере добавьте swap (пример для Ubuntu):
+
+```bash
+sudo fallocate -l 2G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+```
+
+После этого снова Deploy в EasyPanel.
 
 Локальная проверка Docker:
 
